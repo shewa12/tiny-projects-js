@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 560px;
+        }
+        th {
+            cursor: pointer;
+        }
+        td {
+            padding:10px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+</head>
+<body>
+    <h3>Sorting table</h3>
+    <table id="course_table" border="1px solid gray">
+        <thead>
+            <th>Course</th>
+            <th class="sorting">Total Enroll</th>
+            <th class="sorting">Rating</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ABC</td>
+                <td>23</td>
+                <td><i class="fas fa-star"></i>1.00</td>
+            </tr>
+            <tr>
+                <td>XYZ</td>
+                <td>2</td>
+                <td><i class="fas fa-star"></i>5.00</td>
+            </tr>
+            <tr>
+                <td>DEF</td>
+                <td>31</td>
+                <td><i class="fas fa-star"></i>3.50</td>
+            </tr>
+            <tr>
+                <td>IJK</td>
+                <td>23</td>
+                <td><i class="fas fa-star"></i>4.00</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>table 2</h3>
+    <table id="course_table" border="1px solid gray">
+        <thead>
+            <th>Course</th>
+            <th class="sorting">Total Enroll</th>
+            <th class="sorting">Rating</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ABC</td>
+                <td>23</td>
+                <td><i class="fas fa-star"></i>1.00</td>
+            </tr>
+            <tr>
+                <td>XYZ</td>
+                <td>2</td>
+                <td><i class="fas fa-star"></i>5.00</td>
+            </tr>
+            <tr>
+                <td>DEF</td>
+                <td>31</td>
+                <td><i class="fas fa-star"></i>3.50</td>
+            </tr>
+            <tr>
+                <td>IJK</td>
+                <td>23</td>
+                <td><i class="fas fa-star"></i>4.00</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+        const comparer = (idx, asc) => (a, b) => ((v1, v2) => 
+            v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+            )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+
+            document.querySelectorAll(".sorting").forEach(th => th.addEventListener('click', (() => {
+                const table = th.closest('table');
+                const tbody = table.querySelector('tbody');
+                Array.from(tbody.querySelectorAll('tr'))
+                    .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                    .forEach(tr => tbody.appendChild(tr) );
+                })
+            ));            
+ 
+
+    </script>
+</body>
+</html>
