@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.tabs {
+			display: flex;
+		}
+		.tab {
+			border: 1px solid red;
+			padding: 10px;
+			margin: 10px;
+			cursor: pointer;
+		}
+		.tab.active {
+			background-color: gray;
+		}
+		.tab-content {
+			display: none;
+		}
+		.tab-content.active {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="container">
+		<h3>container</h3>
+		<div class="tabs">
+			<div class="tab active" data-toggle="tab_one">
+				<h2>Total Earnings</h2>
+			</div>
+			<div class="tab" data-toggle="tab_two">
+				<h2>Total Enrolled</h2>
+			</div>
+			<div class="tab" data-toggle="tab_three">
+				<h2>Total Refund</h2>
+			</div>
+			<div class="tab" data-toggle="tab_four">
+				<h2>Total Discount</h2>
+			</div>
+		</div>
+
+		<div class="tab-content active" id="tab_one">
+			<p>
+				<canvas id="myChart"></canvas>
+			</p>
+		</div>
+		<div class="tab-content" id="tab_two">
+			<p>
+				<canvas id="myChart1"></canvas>
+			</p>
+		</div>
+		<div class="tab-content" id="tab_three">
+			<p>
+				<canvas id="myChart2"></canvas>
+			</p>
+		</div>
+		<div class="tab-content" id="tab_four">
+			<p>
+				<canvas id="myChart3"></canvas>
+			</p>
+		</div>
+	</div>
+  	<!-- Load our React component. -->
+  	<script>
+		window.onload = (event) => {
+			const tabs = document.querySelectorAll(".tab");
+			const tab_contents = document.querySelectorAll(".tab-content");
+			let toggle_div = '';
+			let clicked_tab = '';
+			for ( let tab of tabs ) {
+				tab.onclick = (event) => {
+					const target = event.target;
+					if ( target.tagName === 'H2' ) {
+						clicked_tab = target.parentNode;
+						toggle_div = target.parentNode.dataset.toggle;
+					} else {
+						clicked_tab = target;
+						toggle_div = event.target.dataset.toggle;
+					}
+					//remove active class from tab
+					for ( let tab of tabs ) {
+						if ( tab.classList.contains('active') ) {
+							tab.classList.remove('active')
+						}
+					}
+					clicked_tab.classList.add('active')
+					
+					//update active tab
+					for ( let tab_content of tab_contents ) {
+						if ( tab_content.classList.contains('active') ) {
+							tab_content.classList.remove('active')
+						}
+					}
+					document.querySelector(`#${toggle_div}`).classList.add('active');
+				}
+			}
+		}
+  	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script defer>
+		var test = "<?php function t(){return [1,2,3];} echo t();?>";
+		console.log(test);
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var chart = new Chart(ctx, {
+			// The type of chart we want to create
+			type: 'line',
+
+			//The data for our dataset
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'Earnings',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					data: [1]
+				}]
+			},
+
+			// Configuration options go here
+			options: {}
+		});
+
+		var ctx1 = document.getElementById('myChart1').getContext('2d');
+		var chart1 = new Chart(ctx1, {
+			// The type of chart we want to create
+			type: 'line',
+
+			//The data for our dataset
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'Earnings',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					data: [1,2]
+				}]
+			},
+
+			// Configuration options go here
+			options: {}
+		});
+
+		//3 chart
+		var ctx2 = document.getElementById('myChart2').getContext('2d');
+		var chart2 = new Chart(ctx2, {
+			// The type of chart we want to create
+			type: 'line',
+
+			//The data for our dataset
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'Earnings',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					data: [1,2,3]
+				}]
+			},
+
+			// Configuration options go here
+			options: {}
+		});
+
+		//3 chart
+		var ctx3 = document.getElementById('myChart3').getContext('2d');
+		var chart3 = new Chart(ctx3, {
+			// The type of chart we want to create
+			type: 'line',
+
+			//The data for our dataset
+			data: {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'Earnings',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					data: [1,2,3,4]
+				}]
+			},
+
+			// Configuration options go here
+			options: {}
+		});
+	</script>
+</body>
+</html>

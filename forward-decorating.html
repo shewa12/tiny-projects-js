@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forward Decorating</title>
+</head>
+<body>
+	<h2 align="center">Forward Decorating Example</h2>
+
+	<script type="text/javascript">
+		/*
+			@ function that a param
+			@ return value after multiply
+			@ here it always return same for the same param
+			@ this case we should make it cacheable
+
+		*/
+		function slow(x){
+			return x*2;
+		}
+
+		/*
+			@ decorator is a special function that can take another func as a param and alter its behaviour
+		*/
+		function cachingDecorator(func){
+
+			let cache = new Map();
+
+			return function(param){
+				if(cache.has(param)){
+					return cache.get(param);
+				}
+
+				let result = slow(param);
+				cache.set(param,result);
+				return cache.get(param);
+			}
+		}
+
+		let data = cachingDecorator(slow);
+		// alert(data(1));
+		// alert(data(1));//from cache
+
+		/*
+			@ forward calling
+			@ call a function by specifically setting context
+		*/
+
+		function introduction(){
+			return `Hey I'm ${this.name}`;
+		}
+
+		let dog = {name:'Dog'};
+		let cat = {name:'Cat'};
+
+		alert(introduction.call(dog));
+		alert(introduction.call(cat));
+	</script>
+</body>
+</html>

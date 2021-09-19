@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JS Exploring</title>
+	<style type="text/css">
+
+		.tooltip {
+	      position: fixed;
+	      padding: 10px 20px;
+	      border: 1px solid #b3c9ce;
+	      border-radius: 4px;
+	      text-align: center;
+	      font: italic 14px/1.3 sans-serif;
+	      color: #333;
+	      background: #fff;
+	      box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+	      z-index: 999;
+		}
+		.tooltip:before {
+	      	content: '';
+		    background: red;
+		    width: 10px;
+		    height: 10px;
+		    position: absolute;
+		    top: 85%;
+		    right: 50%;
+		    /* padding-top: 10px; */
+		    transform: rotate(45deg);
+		    background: white;			
+		}
+	</style>
+</head>
+<body>
+
+<div class="container" id="elem">
+	<div style="height: 200px"></div>
+	<button data-tooltip="some text  button one">Button one</button>
+	<button data-tooltip="some text button two">Button two</button>
+</div>
+
+	<script type="text/javascript">
+		const elem = document.querySelector('#elem');
+		let div;
+		elem.onmouseover = (event) => {
+			const tooltip = event.target.dataset.tooltip;
+			if(tooltip == undefined) {
+				return ;
+			}
+			div = document.createElement('div');
+			div.className = 'tooltip';
+			div.innerHTML = tooltip;
+			document.body.append(div)
+			let coords = event.target.getBoundingClientRect();
+	      	let left = coords.left + (event.target.offsetWidth - div.offsetWidth) / 2;
+	      	if (left < 0) left = 0; // don't cross the left window edge
+
+	      	let top = coords.top - div.offsetHeight - 5;
+
+	      	if (top < 0) { // if crossing the top window edge, show below instead
+	        	top = coords.top + event.target.offsetHeight + 5;
+	      	}
+
+	        div.style.left = left + 'px';
+  			div.style.top = top + 'px';
+		}
+		elem.onmouseout = () => {
+			
+			if(div) {
+				div.remove();
+				div = null
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Function Binding</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	/*
+		@ function binding
+		@ is usefull for binding function with object
+		@ function.bind(obj) is bind function with the obj and this is helpful fov solving this == undefined issue
+	*/
+	let obj = {
+		fname: 'shaikh',
+		lname: 'ahmed'
+	};	
+	let dog = {
+		fname: 'dog',
+		lname: 'kutta'
+	};
+
+	function fullname(){
+		alert(`${this.fname} ${this.lname}`)
+	}
+
+	let call = fullname.bind(dog);
+	//call();
+function askPassword(ok, fail) {
+  let password = prompt("Password?", '');
+  if (password == "rockstar") ok();
+  else fail();
+}
+
+	let user = {
+		name: 'John',
+
+		loginOk() {
+		    alert(`${this.name} logged in`);
+		},
+
+		loginFail() {
+		    alert(`${this.name} failed to log in`);
+		},
+
+	};
+
+	askPassword(user.loginOk.bind(user), user.loginFail.bind(user));	
+</script>	
+</body>
+</html>

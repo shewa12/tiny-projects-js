@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      border: 1px solid black;
+      padding: 3px;
+      text-align: center;
+    }
+
+    th {
+      font-weight: bold;
+      background-color: #E6E6E6;
+    }
+    li {
+        list-style: none;
+        border: 1px solid #e3e3e3;
+        border-radius: 3px;
+        padding: 5px;
+        text-align: center;
+        transition: .2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    li.active {
+        background-color: #0066ff;
+        color:white;
+    }
+    .calendar-wrapper {
+        display: flex;
+        column-gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="calendar-wrapper">
+        <div class="month">
+
+        </div>
+        <div class="year">
+
+        </div>  
+        <div id="calendar"></div>
+    </div>
+    
+
+    <script>
+    function createCalendar(elem, year, month) {
+
+      let mon = month; // months in JS are 0..11, not 1..12
+      let d = new Date(year, mon);
+
+      let table = '<table><tr><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th><th>SU</th></tr><tr>';
+
+      // spaces for the first row
+      // from Monday till the first day of the month
+      // * * * 1  2  3  4
+      for (let i = 0; i < getDay(d); i++) {
+        table += '<td></td>';
+      }
+
+      // <td> with actual dates
+      while (d.getMonth() == mon) {
+        table += '<td>' + d.getDate() + '</td>';
+
+        if (getDay(d) % 7 == 6) { // sunday, last day of week - newline
+          table += '</tr><tr>';
+        }
+
+        d.setDate(d.getDate() + 1);
+      }
+
+      // add spaces after last days of month for the last row
+      // 29 30 31 * * * *
+      if (getDay(d) != 0) {
+        for (let i = getDay(d); i < 7; i++) {
+          table += '<td></td>';
+        }
+      }
+
+      // close the table
+      table += '</tr></table>';
+
+      elem.innerHTML = table;
+    }
+
+    function getDay(date) { // get day number from 0 (monday) to 6 (sunday)
+      let day = date.getDay();
+      if (day == 0) day = 7; // make Sunday (0) the last day
+      return day - 1;
+    }
+    const date = new Date();
+    const months = [
+        {key: 0, month: 'January'},
+        {key: 1, month: 'February'},
+        {key: 2, month: 'March'},
+        {key: 3, month: 'April'},
+        {key: 4, month: 'May'},
+        {key: 5, month: 'June'},
+        {key: 6, month: 'July'},
+        {key: 7, month: 'August'},
+        {key: 8, month: 'September'},
+        {key: 9, month: 'October'},
+        {key: 10, month: 'November'},
+        {key: 11, month: 'December'},
+    ];
+    let markup = '';
+    for ( const [key, value] of Object.entries(months)) {
+        let active = ''
+        date.getMonth() == key ? active = 'active' : '';
+        markup += `<li class='${active}' data-key='${key}'>${value.month}</li>`;
+    }
+    document.querySelector('.month').innerHTML = markup;
+    document.querySelector('.year').innerHTML = 'Current Year: '+date.getFullYear();
+    
+    createCalendar(calendar, date.getFullYear(), date.getMonth()-1);
+    const li = document.querySelectorAll('li');
+    for(let l of li) {
+        l.onclick = (e) => {
+            removeActive();
+            e.target.classList.add('active');
+            createCalendar(calendar, date.getFullYear(), e.target.dataset.key);
+        }
+    }
+    function removeActive() {
+        const li = document.querySelectorAll('li');
+        for(let l of li) {
+            l.classList.contains('active') ? l.classList.remove('active') : '';
+        }
+    }
+    </script>
+
+</body>
+</html>

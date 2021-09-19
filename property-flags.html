@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JS Exploring</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	/*
+		@ javascript obj has property flags
+		@ all remains hidden and default value is true
+		@ flags: writable,enumerable,configurable
+		@ Object.getOwnPropertyDescriptor(obj,prop,descriptor_obj)
+	*/
+	let users = {
+		name: 'shewa',
+		age: 29,
+	};
+	/*
+		@ Object.defineProperty() is used
+		@ to fine property flags
+	*/
+	// Object.defineProperty(users,"name",{
+	// 	writable: false,
+	// 	enumerable: false,
+	// 	configurable: false
+	// })
+	/*
+		@ as like below there number of more function
+		@ that work with object flag prop
+	*/
+	Object.freeze(users);
+	users.add = "Dhaka";
+	console.log(users)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JS Exploring</title>
+	<style type="text/css">
+
+		.container {
+			background-color: tomato;
+			padding: 30px;
+			font-size: 18px;
+			color: #fff;
+		}
+
+	</style>
+</head>
+<body>
+
+<div class="container" id="elem">
+	<ul class="main" id="tree">
+		<li>Bangladesh
+			<ul>
+				<li>Dhaka
+					<ul>
+						<li>Dhanmondi</li>
+						<li>Gulsan</li>
+						<li>Banani</li>
+					</ul>
+				</li>
+			</ul>
+		</li>		
+		<li>India
+			<ul>
+				<li>Mumbai
+					<ul>
+						<li>Mumbai city</li>
+					</ul>
+				</li>
+				<li>
+					Kolkata
+				</li>
+			</ul>
+		</li>
+		<li>
+			Pakistan
+		</li>
+	</ul>
+</div>
+
+	<script type="text/javascript">
+    for (let li of tree.querySelectorAll('li')) {
+      let span = document.createElement('span');
+      li.prepend(span);
+      span.append(span.nextSibling); // move the text node into span
+    }		
+		const elem = document.querySelector("#elem");
+		elem.onclick = (event) => {
+			if(event.target.tagName === 'SPAN') {
+				const hasParentUl = event.target.parentNode.querySelector('ul');
+				if(!hasParentUl) {
+					return
+				}
+				hasParentUl.hidden = !hasParentUl.hidden
+			}
+		}
+	</script>
+</body>
+</html>

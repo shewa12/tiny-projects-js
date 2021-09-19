@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Generating a downloadable CSV file in the browser.
+    </title>
+	<script src="jszip.min.js"></script>
+	<script src="FileSaver.min.js"></script>
+  </head>
+  <body>
+    <h1>Generating a downloadable CSV file in the browser.</h1>
+  
+    <script>
+        const student_data = [
+            {
+                "name": "Samsung",
+                "age": "55"
+            },
+            {
+                "name": "Pixel XL",
+                "age": "77",
+            }
+        ];
+        const earning_data = [
+            {
+                "model": "Samsung S7",
+                "price": "55",
+            },
+            {
+                "model": "Pixel XL",
+                "price": "77",
+            }
+        ];
+        const discount_data = [
+            {
+                "model": "Samsung S7",
+                "discount": "55",
+            },
+            {
+                "model": "Pixel XL",
+                "discount": "77",
+            }
+        ];
+        const refund_data = [
+            {
+                "model": "Samsung S7",
+                "refund": "55",
+            },
+            {
+                "model": "Pixel XL",
+                "refund": "77",
+            }
+        ];
+ 
+        // get keys as array
+        const students_keys = Object.keys(student_data[0]);
+        const student_string = [students_keys.join(",") , student_data.map(row => students_keys.map(key => row[key]).join(",")).join("\n")].join("\n")
+
+        const earning_keys = Object.keys(earning_data[0]);
+        const earning_string = [earning_keys.join(",") , earning_data.map(row => earning_keys.map(key => row[key]).join(",")).join("\n")].join("\n")
+
+        const discount_keys = Object.keys(discount_data[0]);
+        const discount_string = [discount_keys.join(",") , discount_data.map(row => discount_keys.map(key => row[key]).join(",")).join("\n")].join("\n")
+
+        const refund_keys = Object.keys(refund_data[0]);
+        const refund_string = [refund_keys.join(",") , refund_data.map(row => refund_keys.map(key => row[key]).join(",")).join("\n")].join("\n")
+            
+        //generate csv
+        const student_csv = new Blob([student_string])
+        const earing_csv = new Blob([earning_string])
+        const discount_csv = new Blob([discount_string])
+        const refund_csv = new Blob([refund_string])
+            
+        //add files
+        var zip = new JSZip();
+          zip.file("students.csv", student_csv);
+          zip.file("earnings.csv", earing_csv);
+          zip.file("refunds.csv", refund_csv);
+          zip.file("discounts.csv", discount_csv);
+          
+          //generate zip archive
+            try {
+              zip.generateAsync({type:"blob"})
+                .then(function(content) {
+                    const blob = new Blob([content], {type: 'application/zip'});
+                    const link = document.createElement('a');
+                    document.body.appendChild(link);
+                    link.download = "analytics-data.zip";
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                });
+            } catch(err) {
+              alert(err)
+            }
+    </script>
+  </body>
+</html>
