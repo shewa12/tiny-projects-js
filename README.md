@@ -1,6 +1,6 @@
 # Tiny Projects (JS)
 
-Tiny projects based on "Pure Javascript". There are number of projects that will be useful in out daily development life. This tiny projects can save many developers working day. All projects are fully developed on "Vanilla JS". Hopefully gradually the number of project will be increased.
+Tiny projects based on "Pure Javascript". There are number of projects that will be useful in our daily development life. This tiny projects can save many developers working day. All projects are fully developed on "Vanilla JS". Hopefully gradually the number of project will be increased & more exciting projects are on the way.
 
 # Available Projects
 1. Ball moving in the box
